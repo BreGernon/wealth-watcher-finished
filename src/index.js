@@ -1,17 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'; // Import React library
+import ReactDOM from 'react-dom'; // Import ReactDOM for rendering components to the DOM
+import './index.css'; // Import global CSS styles
+import App from './App'; // Import the main App component
+import reportWebVitals from './reportWebVitals'; // Import web vitals for performance measurement
+import { AuthProvider } from './contexts/AuthContext'; // Import AuthProvider to manage authentication state
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+// Render the React application
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    {/* AuthProvider component provides authentication context to the entire app */}
+    <AuthProvider>
+      <App /> {/* Main application component */}
+    </AuthProvider>
+  </React.StrictMode>,
+  document.getElementById('root') // Target DOM element where the app will be rendered
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Optional: Measure performance and log results or send to an analytics endpoint
+// You can use the function to measure performance by passing a callback
+// e.g., reportWebVitals(console.log)
 reportWebVitals();
