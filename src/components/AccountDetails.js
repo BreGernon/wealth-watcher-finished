@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../utils/firebase";
-import { updateProfile, updateEmail, deleteUser } from "firebase/auth";
+import { updateProfile, updateEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import "../styles/AccountDetails.css";
 import { useNavigate } from "react-router-dom";
 import Header from './Header';
 
-/**
- * AccountDetails component allows users to view and update their account information
- * and provides an option to delete the account. The component handles user authentication,
- * updates to the display name and email, and account deletion with confirmation.
- * 
- * @component
- */
 const AccountDetails = () => {
     const [displayName, setDisplayName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,12 +14,10 @@ const AccountDetails = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [password, setPassword] = useState(""); // State for password input
+    const [showPasswordInput, setShowPasswordInput] = useState(false); // Show password input form
     const navigate = useNavigate();
 
-    /**
-     * useEffect hook to fetch user data from Firebase when the component mounts.
-     * It sets the initial display name and email based on the authenticated user.
-     */
     useEffect(() => {
         const fetchUserData = async () => {
             const user = auth.currentUser;
@@ -34,12 +25,10 @@ const AccountDetails = () => {
                 setDisplayName(user.displayName || "");
                 setEmail(user.email || "");
                 
-                // Fetch user data from Firestore
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    // Additional user data can be set here if needed
                 }
             }
         };
@@ -47,10 +36,6 @@ const AccountDetails = () => {
         fetchUserData();
     }, []);
 
-    /**
-     * Handles the profile update for the display name and email.
-     * It updates the Firebase Authentication profile and the Firestore document.
-     */
     const handleUpdateProfile = async () => {
         setError(null);
         setSuccess(null);
@@ -59,21 +44,18 @@ const AccountDetails = () => {
             const user = auth.currentUser;
             if (!user) throw new Error ("No user is currently signed in");
 
-            // Update display name if changed
             if (newDisplayName) {
                 await updateProfile(user, { displayName: newDisplayName });
                 setDisplayName(newDisplayName);
                 setNewDisplayName("");
             }
 
-            // Update email if changed
             if (newEmail) {
                 await updateEmail(user, newEmail);
                 setEmail(newEmail);
                 setNewEmail("");
             }
 
-            // Update user document in Firestore
             const userDocRef = doc(db, "users", user.uid);
             await updateDoc(userDocRef, {
                 displayName: newDisplayName || displayName,
@@ -87,10 +69,6 @@ const AccountDetails = () => {
         }
     };
 
-    /**
-     * Handles the account deletion process. Deletes the user's data from Firestore
-     * and the Firebase Authentication account. Redirects to the homepage after deletion.
-     */
     const handleDeleteAccount = async () => {
         setError(null);
         setIsDeleting(true);
@@ -98,6 +76,10 @@ const AccountDetails = () => {
         try {
             const user = auth.currentUser;
             if (!user) throw new Error("No user is currently signed in.");
+
+            // Re-authenticate user
+            const credential = EmailAuthProvider.credential(user.email, password);
+            await reauthenticateWithCredential(user, credential);
 
             // Delete user document from Firestore
             const userDocRef = doc(db, "users", user.uid);
@@ -111,6 +93,9 @@ const AccountDetails = () => {
         } catch (error) {
             setError("Failed to delete account. Please try again.");
             console.error("Account deletion error:", error);
+            if (error.code === 'auth/requires-recent-login') {
+                setError("Please re-authenticate before deleting your account.");
+            }
         } finally {
             setIsDeleting(false);
         }
@@ -122,7 +107,6 @@ const AccountDetails = () => {
             <div className="account-details">
                 <h2>Account Details</h2>
                 
-                {/* Profile information section for updating display name and email */}
                 <div className="profile-info">
                     <div>
                         <label>Display Name: </label>
@@ -144,25 +128,34 @@ const AccountDetails = () => {
                     </div>
                 </div>
 
-                {/* Error and success message display */}
                 {error && <p className="error">{error}</p>}
                 {success && <p className="success">{success}</p>}
 
-                {/* Button to save profile changes */}
                 <button onClick={handleUpdateProfile}>Save Changes</button>
 
-                {/* Button to log out the user */}
                 <button className="logout" onClick={() => auth.signOut().then(() => navigate("/"))}>
                     Log Out
                 </button>
 
-                {/* Account deletion section */}
                 <div className="account-deletion">
                     <h3>Danger Zone</h3>
                     <p>Deleting your account will permanently remove all your data. This action cannot be undone.</p>
-                    <button onClick={handleDeleteAccount} disabled={isDeleting}>
+                    <button onClick={() => setShowPasswordInput(true)} disabled={isDeleting}>
                         {isDeleting ? "Deleting..." : "Delete Account"}
                     </button>
+                    {showPasswordInput && (
+                        <div>
+                            <input
+                                type="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <button onClick={handleDeleteAccount} disabled={isDeleting}>
+                                Confirm Delete
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
