@@ -5,7 +5,14 @@ import './styles/StartPage.css'; // Import CSS for styling the StartPage
 import Login from './components/Login'; // Import the Login component
 import Signup from "./components/Signup"; // Import the Signup component
 import Dashboard from "./components/Dashboard"; // Import the Dashboard component
+import Expenses from "./components/Expenses";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import the ProtectedRoute component
+import AccountDetails from "./components/AccountDetails";
+import Budgets from "./components/Budgets";
+import Goals from "./components/Goals";
+import Reports from "./components/Reports";
+import HelpCenter from "./components/HelpCenter";
+import About from "./components/About";
 
 function App() {
   return (
@@ -33,9 +40,39 @@ function App() {
             }
           />
 
+          {/* Protected routes require authentication */}
           <Route
             path="/dashboard" // Route for the dashboard path
             element={<ProtectedRoute><Dashboard /></ProtectedRoute>} // Protect the Dashboard route with ProtectedRoute
+          />
+          <Route
+            path="/expenses"
+            element={<ProtectedRoute><Expenses /></ProtectedRoute>}
+          />
+
+          <Route
+            path="/account"
+            element={<ProtectedRoute><AccountDetails /></ProtectedRoute>}
+          />
+          <Route
+            path="/budgets"
+            element={<ProtectedRoute><Budgets /></ProtectedRoute>}
+          />
+          <Route
+            path="/goals"
+            element={<ProtectedRoute><Goals /></ProtectedRoute>}
+          />
+          <Route
+            path="/reports"
+            element={<ProtectedRoute><Reports /></ProtectedRoute>}
+          />
+          <Route
+            path="/help-center"
+            element={<ProtectedRoute><HelpCenter /></ProtectedRoute>}
+          />
+          <Route
+            path="/about"
+            element={<ProtectedRoute><About /></ProtectedRoute>}
           />
         </Routes>
       </div>

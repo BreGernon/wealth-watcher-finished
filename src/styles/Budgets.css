@@ -1,0 +1,125 @@
+/* Reset default margins and paddings, set full width and background color */
+body, html {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    width: 100%; /* Full width */
+    background-color: #F0F0F0; /* Light gray background color */
+  }
+  
+  /* Dashboard container styling */
+  .dashboard {
+      padding: 20px; /* Add padding around the content */
+      font-family: Arial, Helvetica, sans-serif; /* Set font family */
+      min-height: 100vh; /* Ensure the dashboard takes at least full viewport height */
+      background-color: #F0F0F0; /* Match the background color with body */
+  }
+  
+  /* Header styling for logged-in state */
+  .loggedin-header {
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack child elements vertically */
+      align-items: center; /* Center align child elements horizontally */
+      margin-bottom: 20px; /* Space below the header */
+      width: 100%; /* Full width of the container */
+  }
+  
+  /* Logo container styling */
+  .logo-container {
+    background-color: #008080; /* Teal background color */
+    padding: 20px; /* Add padding around the logo */
+    width: 100%; /* Full width */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center align logo horizontally */
+  }
+  
+  /* Logo image styling */
+  .loggedin-logo {
+      max-height: 50px; /* Restrict maximum height */
+      margin-bottom: 10px; /* Space below the logo */
+  }
+  
+  /* Full width navigation bar styling */
+  .full-width-nav {
+    width: 100vw; /* Full viewport width */
+    background-color: #005073; /* Dark blue background color */
+  }
+  
+  /* Navigation bar styling */
+  .loggedin-nav {
+      display: flex; /* Use flexbox for layout */
+      justify-content: space-around; /* Distribute links evenly */
+      width: 100vw; /* Full viewport width */
+      background-color: #005073; /* Dark blue background color */
+      padding: 10px 0; /* Vertical padding */
+      box-sizing: border-box; /* Include padding in width calculations */
+  }
+  
+  /* Navigation link styling */
+  .loggedin-nav a {
+      color: white; /* White text color */
+      text-decoration: none; /* Remove underline from links */
+      padding: 10px; /* Add padding around text */
+      flex: 1; /* Allow links to grow and fill available space */
+      text-align: center; /* Center align text */
+  }
+  
+  /* Navigation link hover effect */
+  .loggedin-nav a:hover {
+      background-color: #555; /* Darker background on hover */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .loggedin-nav {
+        flex-direction: column; /* Stack links vertically */
+        padding: 5px 0; /* Adjust vertical padding */
+    }
+  
+    .loggedin-nav a {
+        padding: 8px 0; /* Adjust padding for smaller screens */
+        width: 100%; /* Full width of the container */
+    }
+  }
+  
+  /* Table styling for Budgets page */
+  table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+  }
+  
+  th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+  }
+  
+  tr.selected {
+      background-color: #007bff; /* Highlight selected row */
+  }
+  
+  .budget-actions {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 20px;
+  }
+  
+  /* Button styling */
+  button {
+      padding: 10px 20px; /* Padding inside buttons */
+      font-size: 16px; /* Font size */
+      cursor: pointer; /* Pointer cursor on hover */
+      background-color: #007bff; /* Blue background color */
+      color: white; /* White text color */
+      border: none; /* Remove border */
+      border-radius: 5px; /* Rounded corners */
+      flex-grow: 1;
+      margin: 0 10px;
+  }
+  
+  button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+  }
+  

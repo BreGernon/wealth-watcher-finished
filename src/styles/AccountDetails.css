@@ -1,0 +1,52 @@
+/* Container for account details section */
+.account-details {
+  margin: 20px; /* Adds space around the container */
+  padding: 20px; /* Adds space inside the container */
+  background-color: #f5f5f5; /* Light gray background for a subtle effect */
+  border-radius: 8px; /* Rounds the corners of the container */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adds a soft shadow for a card-like appearance */
+}
+
+/* Container for account information */
+.account-info {
+  margin-bottom: 20px; /* Adds space below the account info section */
+}
+
+/* Styles for paragraphs within the account info section */
+.account-info p {
+  font-size: 16px; /* Sets a readable font size for paragraph text */
+  margin: 10px 0; /* Adds vertical space between paragraphs */
+}
+
+/* Container for account actions (buttons) */
+.account-actions {
+  display: flex; /* Uses flexbox for layout */
+  justify-content: space-between; /* Distributes buttons evenly with space between them */
+}
+
+/* Common styles for buttons within the account actions section */
+.account-actions button {
+  padding: 10px 20px; /* Adds padding inside the buttons */
+  border: none; /* Removes default border */
+  border-radius: 5px; /* Rounds the corners of the buttons */
+  cursor: pointer; /* Changes cursor to pointer to indicate clickable buttons */
+}
+
+/* Styles for the delete account button */
+.delete-account {
+  background-color: #e74c3c; /* Red background for the delete action */
+  color: white; /* White text color for contrast */
+}
+
+/* Styles for the logout button */
+.logout {
+  background-color: #3498db; /* Blue background for the logout action */
+  color: white; /* White text color for contrast */
+}
+
+/* Styles for error messages */
+.error {
+  margin-top: 20px; /* Adds space above the error message */
+  color: red; /* Red color to indicate error */
+  font-weight: bold; /* Makes the text bold for emphasis */
+}

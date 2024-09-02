@@ -14,21 +14,25 @@ const Login = () => {
     const navigate = useNavigate();
 
     // Function to handle login form submission
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault(); // Prevents the default form submission behavior
         setError(null); // Clears any previous error message
         
-        // Firebase sign-in function
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // On successful login, navigate to the dashboard
-                navigate("/dashboard");
-            })
-            .catch((error) => {
-                // On error, set an error message and log the error
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            navigate("/dashboard");
+            
+        } catch (error) {
+            console.error("Login error: ", error.code, error.message);
+
+            if (error.code === "auth/wrong-password") {
+                setError("No user found with this email. Please check of sign up.");
+            } else if (error.code === "auth/wrong-password") {
+                setError("Incorrect password. Please try again.");
+            } else {
                 setError("Failed to log in. Please check your credentials.");
-                console.error("Login error: ", error);
-            });
+            }
+        }
     };
 
     // Function to handle password reset

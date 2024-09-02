@@ -1,0 +1,82 @@
+/* Main container for the Help Center page */
+.help-center {
+    font-family: Arial, sans-serif; /* Sets the font for the page */
+    background-color: #f9f9f9; /* Light gray background for a clean look */
+    padding: 20px; /* Adds space inside the container */
+}
+
+/* Title styling for the Help Center page */
+.help-center h2 {
+    text-align: center; /* Centers the title */
+    color: #333; /* Dark gray color for the title text */
+}
+
+/* Container for the main content of the Help Center */
+.help-center-content {
+    max-width: 800px; /* Limits the width of the content */
+    margin: 0 auto; /* Centers the content horizontally */
+    padding: 20px; /* Adds space inside the content container */
+    background-color: #fff; /* White background for the content area */
+    border-radius: 8px; /* Rounds the corners of the content container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for a card-like effect */
+}
+
+/* Section containing frequently asked questions */
+.faq-section {
+    margin-bottom: 20px; /* Adds space below the FAQ section */
+}
+
+/* Header styling for FAQ sections */
+.faq-section h3 {
+    border-bottom: 2px solid #ddd; /* Adds a bottom border for separation */
+    padding-bottom: 10px; /* Adds space below the header text */
+    margin-bottom: 20px; /* Adds space below the header */
+}
+
+/* Individual FAQ item styling */
+.faq-item {
+    margin-bottom: 15px; /* Adds space below each FAQ item */
+}
+
+/* Header styling for each FAQ item */
+.faq-item h4 {
+    font-size: 18px; /* Sets a slightly larger font size for FAQ headers */
+    color: #555; /* Medium gray color for the FAQ header text */
+}
+
+/* Paragraph styling within FAQ items */
+.faq-item p {
+    font-size: 16px; /* Sets a readable font size for FAQ content */
+    color: #666; /* Light gray color for the FAQ content text */
+}
+
+/* Section containing contact information */
+.contact-section h3 {
+    border-bottom: 2px solid #ddd; /* Adds a bottom border for separation */
+    padding-bottom: 10px; /* Adds space below the header text */
+    margin-bottom: 20px; /* Adds space below the header */
+}
+
+/* Unordered list styling in the contact section */
+.contact-section ul {
+    list-style: none; /* Removes the default list styling */
+    padding: 0; /* Removes default padding */
+}
+
+/* List item styling in the contact section */
+.contact-section ul li {
+    font-size: 16px; /* Sets a readable font size for list items */
+    color: #555; /* Medium gray color for list item text */
+    margin-bottom: 10px; /* Adds space below each list item */
+}
+
+/* Link styling within the contact section list */
+.contact-section ul li a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none; /* Removes underline from links */
+}
+
+/* Hover effect for links in the contact section */
+.contact-section ul li a:hover {
+    text-decoration: underline; /* Underlines links on hover */
+}

@@ -1,0 +1,125 @@
+/* Reset default margins and paddings, set full width and background color */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #F0F0F0;
+}
+
+/* Goals page container styling */
+.goals-page {
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    background-color: #F0F0F0;
+}
+
+/* Header styling for logged-in state */
+.loggedin-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Logo container styling */
+.logo-container {
+    background-color: #008080;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Logo image styling */
+.loggedin-logo {
+    max-height: 50px;
+    margin-bottom: 10px;
+}
+
+/* Full width navigation bar styling */
+.full-width-nav {
+    width: 100vw;
+    background-color: #005073;
+}
+
+/* Navigation bar styling */
+.loggedin-nav {
+    display: flex;
+    justify-content: space-around;
+    width: 100vw;
+    background-color: #005073;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+/* Navigation link styling */
+.loggedin-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    flex: 1;
+    text-align: center;
+}
+
+/* Navigation link hover effect */
+.loggedin-nav a:hover {
+    background-color: #555;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .loggedin-nav {
+        flex-direction: column;
+        padding: 5px 0;
+    }
+
+    .loggedin-nav a {
+        padding: 8px 0;
+        width: 100%;
+    }
+}
+
+/* Table styling for Goals page */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+tr.selected {
+    background-color: #007bff; /* Highlight selected row */
+}
+
+/* Action buttons for Goals page */
+.goal-actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

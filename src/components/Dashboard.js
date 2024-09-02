@@ -1,84 +1,158 @@
-import React from 'react'; // Importing the React library
-import logo from '../assets/Logo.png'; // Importing the logo image
-import { Link } from 'react-router-dom'; // Importing Link for navigation
-import '../styles/Dashboard.css'; // Importing CSS for the Dashboard component
+import React, { useEffect, useState } from 'react';
+import { auth, db } from '../utils/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import Header from './Header';
+import '../styles/Dashboard.css';
 
-// Functional component for the Dashboard page
 const Dashboard = () => {
+    // State hooks for managing data
+    const [expenses, setExpenses] = useState([]);
+    const [monthToDateExpenses, setMonthToDateExpenses] = useState(0);
+    const [totalBudgets, setTotalBudgets] = useState(0);
+    const [recentGoalPercentage, setRecentGoalPercentage] = useState(0);
+
+    /**
+     * Fetches user data from Firestore and updates state with
+     * expenses, month-to-date expenses, total budgets, and
+     * recent goal percentage.
+     */
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Get current authenticated user
+                const user = auth.currentUser;
+                if (user) {
+                    const userId = user.uid;
+                    // Reference to user document in Firestore
+                    const docRef = doc(db, "users", userId);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+
+                        // Fetch and sort expenses data
+                        const expensesData = userData.expenses || [];
+                        const sortedExpenses = expensesData.sort((a, b) => {
+                            const dateA = a.date && a.date.toDate ? a.date.toDate() : new Date(a.date);
+                            const dateB = b.date && b.date.toDate ? b.date.toDate() : new Date(b.date);
+                            return dateB - dateA;
+                        });
+
+                        // Update state with the three most recent expenses
+                        setExpenses(sortedExpenses.slice(0, 3));
+
+                        // Calculate month-to-date expenses
+                        const now = new Date();
+                        const currentMonth = now.getMonth();
+                        const currentYear = now.getFullYear();
+                        const monthToDateExpensesTotal = sortedExpenses
+                            .filter(expense => {
+                                const expenseDate = expense.date && expense.date.toDate
+                                    ? expense.date.toDate()
+                                    : new Date(expense.date);
+                                return (
+                                    expenseDate.getMonth() === currentMonth &&
+                                    expenseDate.getFullYear() === currentYear
+                                );
+                            })
+                            .reduce((total, expense) => total + Number(expense.amount), 0);
+
+                        // Update state with month-to-date expenses
+                        setMonthToDateExpenses(monthToDateExpensesTotal);
+
+                        // Fetch and calculate total budgets
+                        const budgetsData = userData.budgets || [];
+                        console.log("Budgets Data:", budgetsData); // Debugging line
+                        const totalBudgetsAmount = budgetsData.reduce((total, budget) => {
+                            const budgetAmount = Number(budget.budgetedAmount) || 0;
+                            console.log("Budget Amount:", budgetAmount); // Debugging line
+                            return total + budgetAmount;
+                        }, 0);
+                        console.log("Total Budgets Amount:", totalBudgetsAmount); // Debugging line
+                        setTotalBudgets(totalBudgetsAmount);
+
+                        // Calculate the most recent goal percentage
+                        const goalsData = userData.goals || [];
+                        if (goalsData.length > 0) {
+                            const mostRecentGoal = goalsData[goalsData.length - 1];
+                            const goalPercentage = mostRecentGoal.amount > 0
+                                ? (mostRecentGoal.currentAmount / mostRecentGoal.amount) * 100
+                                : 0;
+                            setRecentGoalPercentage(goalPercentage.toFixed(2));
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []); // Empty dependency array means this effect runs once when the component mounts
+
     return (
         <div className="dashboard">
-            {/* Header section with logo and navigation */}
-            <header className="loggedin-header">
-                <div className="logo-container">
-                    {/* Displaying the logo image */}
-                    <img src={logo} className="loggedin-logo" alt="logo" />
-                </div>
-                <nav className="full-width-nav">
-                    <div className="loggedin-nav">
-                        {/* Navigation links */}
-                        <Link to="/dashboard">Dashboard</Link>
-                        <Link to="/account">Account</Link>
-                        <Link to="/expenses">Expenses</Link>
-                        <Link to="/budgets">Budgets</Link>
-                        <Link to="/goals">Goals</Link>
-                        <Link to="/reports">Reports</Link>
-                        <Link to="/settings">Settings</Link>
-                        <Link to="/help-center">Help Center</Link>
-                        <Link to="/about">About</Link>
-                        <Link to="/logout">Logout</Link>
-                    </div>
-                </nav>
-            </header>
-            {/* Main content section */}
+            <Header />
             <div className="data-section">
-                {/* Section with placeholder circles */}
                 <div className="data-circles">
-                    <div className="circle">Placeholder 1</div>
-                    <div className="circle">Placeholder 2</div>
-                    <div className="circle">Placeholder 3</div>
+                    <div className="circle expense-circle">
+                        <h3>Month-to-Date Expenses</h3>
+                        <p>${monthToDateExpenses.toFixed(2)}</p>
+                    </div>
+                    <div className="circle budget-circle">
+                        <h3>Total Budgets</h3>
+                        <p>${totalBudgets.toFixed(2)}</p>
+                    </div>
+                    <div className="circle goal-circle">
+                        <h3>Recent Goal Percentage</h3>
+                        <p>{recentGoalPercentage}%</p>
+                    </div>
                 </div>
-                {/* Table displaying expenses */}
-                <table className="expense-table">
+                <h2>Expenses</h2>
+                <table>
                     <thead>
                         <tr>
-                            {/* Table headers */}
-                            <th>Date</th>
                             <th>Category</th>
-                            <th>Description</th>
                             <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Table rows with placeholder data */}
-                        <tr>
-                            <td>Placeholder Date</td>
-                            <td>Placeholder Category</td>
-                            <td>Placeholder Description</td>
-                            <td>$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Placeholder Date</td>
-                            <td>Placeholder Category</td>
-                            <td>Placeholder Description</td>
-                            <td>$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Placeholder Date</td>
-                            <td>Placeholder Category</td>
-                            <td>Placeholder Description</td>
-                            <td>$0.00</td>
-                        </tr>
+                        {expenses.map((expense, index) => {
+                            let formattedDate;
+                            try {
+                                const expenseDate = expense.date && expense.date.toDate
+                                    ? expense.date.toDate()
+                                    : new Date(expense.date);
+
+                                if (!isNaN(expenseDate.getTime())) {
+                                    formattedDate = expenseDate.toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                    });
+                                } else {
+                                    formattedDate = "Invalid Date";
+                                }
+                            } catch (error) {
+                                formattedDate = "Invalid Date";
+                            }
+
+                            return (
+                                <tr key={index}>
+                                    <td>{expense.category}</td>
+                                    <td>${Number(expense.amount).toFixed(2)}</td>
+                                    <td>{expense.description}</td>
+                                    <td>{formattedDate}</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
-            </div>
-            {/* Action buttons section */}
-            <div className="action-buttons">
-                <button>Add Expense</button>
-                <button>Add Goal</button>
-                <button>Set Budget</button>
             </div>
         </div>
     );
 };
 
-export default Dashboard; // Exporting the Dashboard component for use in other parts of the application
+export default Dashboard;

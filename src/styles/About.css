@@ -1,0 +1,57 @@
+/* General styles for the About page */
+.about-page {
+    font-family: Arial, sans-serif; /* Sets the font for the page */
+    background-color: #f9f9f9; /* Light gray background for the page */
+    padding: 20px; /* Adds padding around the entire page */
+}
+
+/* Container for the main content of the About page */
+.about-content {
+    max-width: 800px; /* Limits the width of the content area */
+    margin: 0 auto; /* Centers the content horizontally */
+    padding: 20px; /* Adds padding inside the content area */
+    background-color: #fff; /* White background for the content area */
+    border-radius: 8px; /* Rounds the corners of the content area */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for a card-like effect */
+}
+
+/* Styles for headings within the content area */
+.about-content h2 {
+    text-align: center; /* Centers the main heading */
+    color: #333; /* Dark gray color for better readability */
+}
+
+.about-content h3 {
+    margin-top: 20px; /* Adds space above the subheadings */
+    color: #555; /* Slightly lighter gray for subheadings */
+}
+
+/* Styles for paragraphs within the content area */
+.about-content p {
+    font-size: 16px; /* Sets a readable font size for paragraphs */
+    color: #666; /* Medium gray for paragraph text */
+    line-height: 1.6; /* Increases line height for better readability */
+}
+
+/* Styles for unordered lists within the content area */
+.about-content ul {
+    list-style: disc; /* Uses disc bullets for list items */
+    padding-left: 20px; /* Adds padding to the left of the list */
+}
+
+/* Styles for list items within unordered lists */
+.about-content ul li {
+    font-size: 16px; /* Sets a readable font size for list items */
+    color: #555; /* Matches the color of subheadings */
+}
+
+/* Styles for links within list items */
+.about-content ul li a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none; /* Removes underline from links */
+}
+
+/* Styles for links when hovered over */
+.about-content ul li a:hover {
+    text-decoration: underline; /* Adds underline on hover to indicate link */
+}

@@ -23,6 +23,21 @@
   margin-bottom: 1rem; /* Space below the header */
 }
 
+.logout-button {
+  background-color: #f00; /* Red background for logout button */
+  color: #fff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #d00; /* Darker red on hover */
+}
+
 /* Link styling */
 .App-link {
   color: #61dafb; /* Light blue color */

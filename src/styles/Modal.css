@@ -1,0 +1,31 @@
+/* Backdrop overlay for the modal */
+.modal-backdrop {
+    position: fixed; /* Fixes the backdrop to the viewport */
+    top: 0; /* Aligns the backdrop to the top of the viewport */
+    left: 0; /* Aligns the backdrop to the left of the viewport */
+    width: 100%; /* Makes the backdrop span the full width of the viewport */
+    height: 100%; /* Makes the backdrop span the full height of the viewport */
+    background-color: rgba(0, 0, 0, 0.5); /* Adds a semi-transparent black background */
+    display: flex; /* Uses Flexbox for centering the modal */
+    justify-content: center; /* Centers the modal horizontally */
+    align-items: center; /* Centers the modal vertically */
+    z-index: 1000; /* Places the backdrop above other content */
+}
+
+/* Container for the modal content */
+.modal-content {
+    background: white; /* Sets the background color of the modal */
+    padding: 20px; /* Adds space inside the modal */
+    border-radius: 8px; /* Rounds the corners of the modal */
+    width: 400px; /* Sets a fixed width for the modal */
+    max-width: 90%; /* Limits the width to 90% of the viewport */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for a card-like effect */
+}
+
+/* Styling for the close button in the modal */
+.close-button {
+    margin-top: 20px; /* Adds space above the button */
+    padding: 8px 12px; /* Adds space inside the button */
+    font-size: 16px; /* Sets the font size of the button text */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+}

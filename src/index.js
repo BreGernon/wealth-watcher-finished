@@ -7,13 +7,14 @@ import { AuthProvider } from './contexts/AuthContext'; // Import AuthProvider to
 
 // Render the React application
 ReactDOM.render(
-  <React.StrictMode>
-    {/* AuthProvider component provides authentication context to the entire app */}
-    <AuthProvider>
-      <App /> {/* Main application component */}
-    </AuthProvider>
-  </React.StrictMode>,
+    <React.StrictMode>
+      {/* AuthProvider component provides authentication context to the entire app */}
+      <AuthProvider>
+        <App /> {/* Main application component */}
+      </AuthProvider>
+    </React.StrictMode>,
   document.getElementById('root') // Target DOM element where the app will be rendered
+
 );
 
 // Optional: Measure performance and log results or send to an analytics endpoint
